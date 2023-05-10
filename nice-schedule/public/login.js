@@ -21,8 +21,13 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+import { Navigate } from 'react-router-dom';
 
 const auth = getAuth();
+
+export default function Redirect() {
+  return <Navigate to="./calender.html"></Navigate>;
+}
 
 document.getElementById('signUpButton').addEventListener('click', (event) => {
     event.preventDefault()
@@ -33,7 +38,6 @@ document.getElementById('signUpButton').addEventListener('click', (event) => {
         .then((userCredential) => {
             // Signed in
             alert("회원가입 성공");
-            const user = userCredential.user;
             // ...
         })
         .catch((error) => {
@@ -44,6 +48,8 @@ document.getElementById('signUpButton').addEventListener('click', (event) => {
         });
 
 })
+
+const login = document.querySelector(".signInButton");
 
 document.getElementById('signInButton').addEventListener('click', (event) => {
     event.preventDefault()
@@ -58,6 +64,7 @@ document.getElementById('signInButton').addEventListener('click', (event) => {
         })
         .catch((error) => {
             alert("로그인 실패");
+            login.innerHTML += '<Redirect to="/index.html" />';
             const errorCode = error.code;
             const errorMessage = error.message;
         });
@@ -65,37 +72,57 @@ document.getElementById('signInButton').addEventListener('click', (event) => {
 })
 
 // import React, { useState } from "react";
-// import { Redirect } from "react-router-dom"
+// import { Redirect } from "react-router-dom";
 
-// const LoginForm = () => {
-//       const login = async (e) => {
-//       e.preventDefault();
-//       try {
-//         await auth.signInWithEmailAndPassword(email, password);
-//         setLoggedIn(true);
-//       } catch (error) {
-//         alert("Invalid email or password");
-//       }
-//     };
-  
-//     return (
-//       <div>
-//         {loggedIn && <Redirect to="/calendar" />}
-//         <form onSubmit={login}>
-//           <label>
-//             Email:
-//             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-//           </label>
-//           <br />
-//           <label>
-//             Password:
-//             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-//           </label>
-//           <br />
-//           <button type="submit">Log In</button>
-//         </form>
-//       </div>
-//     );
+// function LoginPage() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+//   const handleSignUp = (e) => {
+//     e.preventDefault();
+//     createUserWithEmailAndPassword(auth, email, password)
+//       .then((userCredential) => {
+//         alert("회원가입 성공");
+//         setIsAuthenticated(true);
+//       })
+//       .catch((error) => {
+//         alert("회원가입 실패");
+//         console.error(error);
+//       });
 //   };
-  
-//   export default LoginForm;
+
+//   const handleSignIn = (e) => {
+//     e.preventDefault();
+//     signInWithEmailAndPassword(auth, email, password)
+//       .then((userCredential) => {
+//         alert("로그인 성공");
+//         setIsAuthenticated(true);
+//       })
+//       .catch((error) => {
+//         alert("로그인 실패");
+//         console.error(error);
+//       });
+//   };
+
+//   if (isAuthenticated) {
+//     return <Redirect to="/index.html" />;
+//   }
+
+//   return (
+//     <div>
+//       <form onSubmit={handleSignUp}>
+//         <input type="text" name="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
+//         <input type="password" name="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
+//         <button type="submit">회원가입</button>
+//       </form>
+//       <form onSubmit={handleSignIn}>
+//         <input type="text" name="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
+//         <input type="password" name="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
+//         <button type="submit">로그인</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default LoginPage;
