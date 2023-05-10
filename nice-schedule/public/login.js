@@ -21,7 +21,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
-import { Navigate } from 'react-router-dom';
 
 const auth = getAuth();
 
